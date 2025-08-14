@@ -121,196 +121,33 @@
 </head>
 <script>
   $(function () {
-
-    var arrDataSource = [
-      {
-        name: "idlivro",
-        type: "integer",
-        label: "Id",
-        visibleFilter: "true",
-        orderFilter: "2",
-
-        orderGrid: "1",
-        widthGrid: "70",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling: center",
-        attributesGrid: "texta-aling: center",
-
-        showPreview: "true",
-        widthPreview: "70",
-        positionPreview: "1",
-        indiceTabPreview: "tabDadosGerais",
-      },
-      {
-        name: "dstitulo",
-        type: "string",
-        label: "Titulo",
-        visibleFilter: "true",
-        orderFilter: "1",
-
-        orderGrid: "2",
-        widthGrid: "",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling:center;",
-        attributesGrid: "text-aling: center",
-
-        showPreview: "true",
-        widthPreview: "200",
-        positionPreview: "2",
-        indiceTabPreview: "tabDadosGerais",
-      }
-    ]
-
-    arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro")
-
-    createPgFilter(arrDataSource, "ConsultaLivro")
-
-    $("#frmConsultaLivro #BarAcoes").kendoToolBar({
-      items: [
-        {
-          type: "buttonGroup",
-          buttons: [
-            {
-              id: "BtnIncluir",
-              spriteCSSClass: "k-pg-icon k-i-l1-c1",
-              text: "Incluir",
-              group: "actions",
-              attributes: {
-                "tabindex": "30"
-              },
-              click: function () {
-
-              }
-            },
-            {
-              id: "BtnEditar",
-              sprinteCssClass: "k-pg-icon k-i-l1-c3",
-              text: "Editar",
-              group: "actions",
-              attributes: {
-                "tabindex": "31"
-              },
-              enable: false,
-              click: function () {
-
-              }
-            },
-          ]
-        }
-      ]
-    })
-
-    var DtsConsultaLivro = new kendo.data.DataSource({
-      pageSize: 100,
-      transport: {
-        read: function () {
-
-        }
-      },
-      schema: {
-        model: {
-          fields: getModelDataSource(arrDataSource)
-        }
-      }
-    })
-
-    $("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
-      dataSource: DtsConsultaLivro,
-      heigth: getHeightGridQuery("ConsultaLivros"),
-      selectable: "row",
-      resizable: true,
-      reorderable: true,
-      navigatable: true,
-      columnMenu: true,
-      filterable: true,
-      sortable: {
-        mode: "multiple",
-        allowUnsort: true
-      },
-      sort: function () {
-      },
-      pageable: {
-        pageSizes: [100, 300, 500, "all"],
-        numeric: false,
-        input: true
-      },
-      columns: getColumnsQuery(arrDataSource),
-      columnShow: function (e) {
-      },
-      ColumnHide: function (e) {
-      },
-      dataBound: function (e) {
-      },
-      filter: function (e) {
-      }
-    })
-
-    $("#frmConsultaLivro #GrdConsultaLivro").on("dblclick", function () {
-
-    })
-
-    $("#frmConsultaLivro #splConsulta").kendoSplitter({
-      panes: [
-        { size: "12%", min: "12%" },
-        { size: "65%", min: "25%" },
-        { size: "23%", min: "23%" }
-      ],
-      orientation: "vertical"
-    })
-
-    createScreenPreview(arrDataSource, "ConsultaLivro")
+    OpenWindow("ConsultaLivro", false)
   })
+
+  function OpenWindow(nmJanela, blModal) {
+    $("#app").append('<div id="Win' + nmJanela + '"></div>');
+
+    $('#Win' + nmJanela).kendoWindow({
+      modal: blModal,
+      content: "./view/viw" + nmJanela + ".html",
+      width: blModal ? "800px" : "99.8%",
+      height: blModal ? "auto" : "97%",
+      visible: false,
+      draggable: blModal,
+      resizable: false,
+      closable: true,
+      close: function () {
+        $('#Win' + nmJanela).fadeOut("fast", function () {
+          $('#Win' + nmJanela).data("kendoWindow").destroy();
+        });
+      },
+    });
+  }
 </script>
 
 
 <body>
-  <div class="k-form">
-    <form id="frmConsultaLivro">
-      <div id="splConsulta">
-        <div id="splHeader">
-          <div class="k-bg-blue screen-filter-content">
-            <table>
-              <tr>
-                <td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">
-                  Filtro(s):
-                </td>
-                <td>
-                  <div id="fltConsultaLivro" style="width: auto; "></div>
-                </td>
-                <td style="vertical-align: bottom;padding-bottom: 5px;">
-                  <span id="BtnPesquisar" style="cursor: pointer;width: 100px;height: 24px;" title="Pesquisar"
-                    data-role="button" class="k-button k-button-icon" role="button" aria-disabled="false" tabindex="29">
-                    <span class="k-sprite k-pg-icon k-i-l1-c2" style="margin: 0 auto; text-align: center;"></span>
-                    <span style="margin: 0 auto; margin-right: 3px;">Pesquisar</span>
-                  </span>
-
-                  <span id="BtnAddFilter" style="cursor: pointer;width: 21px !important;height: 21px !important"
-                    title="Adicionar Filtro" data-role="button" class="k-button k-button-icon" role="button"
-                    aria-disabled="false" tabindex="">
-                    <span class="k-sprite k-pg-icon k-i-l1-c1" style="margin: 0 auto;margin-top: 1.4px;"></span>
-                  </span>
-                </td>
-              </tr>
-            </table>
-            <div id="BarAcoes" style="text-align: right; height: 28px"></div>
-          </div>
-        </div>
-        <div id="splMiddle">
-          <div id="GrdConsultaLivro"></div>
-        </div>
-        <div id="splFooter">
-          <div id="bottonConsultaLivro">
-            <div id="tabStripConsultaLivro">
-              <ul>
-                <li id="tabDadosGerais" class="k-state-active">Detalhes</li>
-              </ul>
-              <div id="tabDadosGeraisVisualizacaoConsultaLivro"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
+  <div id="app"></div>
 </body>
 
 </html>
