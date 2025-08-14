@@ -117,37 +117,50 @@
       margin-top: 2px !important;
       height: 2px !important;
     }
+
+    .k-prompt-container,
+    .k-window-content {
+      height: 100% !important;
+      overflow: hidden !important;
+    }
   </style>
+
+  <script>
+    function OpenWindow(blModal, nmJanela, dsTitulo = '') {
+      $("#DivWindowArea").append('<div id="Win' + nmJanela + '"></div>');
+
+      $('#Win' + nmJanela).kendoWindow({
+        title: dsTitulo,
+        modal: blModal,
+        content: "./view/viw" + nmJanela + ".html",
+        height: blModal ? "auto" : $("#DivWindowArea").height() - 3,
+        width: blModal ? "800px" : "99.6%",
+        visible: !blModal,
+        draggable: blModal,
+        resizable: false,
+        closable: blModal,
+        close: function () {
+          $('#Win' + nmJanela).fadeOut("fast", function () {
+            $('#Win' + nmJanela).data("kendoWindow").destroy();
+          });
+        },
+      });
+    }
+  </script>
+
+  <script>
+    $(function () {
+      OpenWindow(false, "ConsultaLivro")
+    })
+  </script>
 </head>
-<script>
-  $(function () {
-    OpenWindow("ConsultaLivro", false)
-  })
-
-  function OpenWindow(nmJanela, blModal) {
-    $("#app").append('<div id="Win' + nmJanela + '"></div>');
-
-    $('#Win' + nmJanela).kendoWindow({
-      modal: blModal,
-      content: "./view/viw" + nmJanela + ".html",
-      width: blModal ? "800px" : "99.8%",
-      height: blModal ? "auto" : "97%",
-      visible: false,
-      draggable: blModal,
-      resizable: false,
-      closable: true,
-      close: function () {
-        $('#Win' + nmJanela).fadeOut("fast", function () {
-          $('#Win' + nmJanela).data("kendoWindow").destroy();
-        });
-      },
-    });
-  }
-</script>
-
 
 <body>
-  <div id="app"></div>
+  <div id="DivWindowArea"
+    style="width: 100%; height: calc(100% - 25px); padding: 3px; background-repeat: no-repeat; background-position: bottom right; background-size: 45%; background-position-x: 99% !important; background-position-y: 98% !important;">
+  </div>
+
+  <div id="popNotificacao"></div>
 </body>
 
 </html>
