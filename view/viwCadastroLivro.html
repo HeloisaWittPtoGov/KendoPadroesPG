@@ -1,18 +1,19 @@
 <script>
   $(function () {
+    console.log("2")
 
     //-----------------------------------------------------------------------------------//
     // Instanciando os campos da tela de cadastro
     //-----------------------------------------------------------------------------------//
-    $("#frmCadastroLivro #flgenero").kendoDropDownList({})
+    $("#frmCadastroLivro #flGenero").kendoDropDownList({})
 
-    $("#frmCadastroLivro #nrpaginas").kendoNumericTextBox()
+    $("#frmCadastroLivro #nrPagina").kendoNumericTextBox()
 
-    $("#frmCadastroLivro #dtpublicacao").kendoDatePicker({
+    $("#frmCadastroLivro #dtPublicacao").kendoDatePicker({
       format: "dd/MM/yyyy"
     })
 
-    $("#frmCadastroLivro #dtpublicacao").kendoMaskedTextBox({
+    $("#frmCadastroLivro #dtPublicacao").kendoMaskedTextBox({
       mask: "00/00/0000"
     })
     //-----------------------------------------------------------------------------------//
@@ -37,34 +38,62 @@
                 "tabindex": "30"
               },
               click: function () {
-                let nrIdCadastro = $("#idlivro").val()
-                let nrIndiceId = arrLivros.findIndex(i => i.idlivro === nrIdCadastro)
+                let nrIdCadastro = $("#frmCadastroLivro #idLivro").val();
+                let nrIndiceId = arrLivros.findIndex(i => i.idlivro == nrIdCadastro);
 
-                let strMensagem = ""
+                let strMensagem = "";
 
-                if (("#WinCadastroLivro #dstitulo").val().trim() == "") {
+                if ($("#frmCadastroLivro #dsTitulo").val().trim() == "") {
                   strMensagem = strMensagem + "O campo título é de preenchimento obrigatório.\n"
                 } else {
-                  let dsTituloInformado = $("#WinCadastroLivro #dstitulo").val().trim().toLowerCase()
+                  let dsTituloInformado = $("#frmCadastroLivro #dstitulo").val().trim().toLowerCase();
                   let strVerificaTitulo = arrLivros.find(function (i) {
-                    return i.dsTitulo.trim().toLowerCase() == dsTituloInformado && i.idLivro != i.nrIdCadastro
+                    return i.dstitulo.trim().toLowerCase() == dsTituloInformado && i.idlivro != nrIdCadastro
                   })
-                  if (verificaTitulo) {
+                  if (strVerificaTitulo) {
                     strMensagem = strMensagem + "Já Existe um livro cadastrado com o titulo informado.\n"
                   }
                 }
-                if ($("#WinCadastroLivro #nmautor").val().trim() = "") {
+
+                if ($("#frmCadastroLivro #nmAutor").val().trim() == "") {
                   strMensagem = strMensagem + "O campo Autor é de preenchimento obrigatório.\n"
                 }
-                if ($("#WinCadastroLivro #flgenero").val().trim() = "") {
+
+                if ($("#frmCadastroLivro #flGenero").val().trim() == "") {
                   strMensagem = strMensagem + "O campo Genero é de preenchimento obrigstório.\n"
                 }
-                if ($("#WinCadastroLivro #nrpagina").val().trim() <= 0) {
+
+                if ($("#frmCadastroLivro #nrPagina").val().trim() <= 0) {
                   strMensagem = strMensagem + "O numero de páginas deve ser superior a zero."
                 }
+
                 if (strMensagem != "") {
                   alert(strMensagem)
+                } else {
+                  if (nrIndiceId >= 0) {
+                    arrLivros[nrIndiceId] = {
+                      idlivro: nrIdCadastro,
+                      dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+                      nmautor: $("#frmCadastroLivro #nmAutor").val(),
+                      flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
+                      nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumerictextBox").value(),
+                      dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
+                      fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+                    }
+                  } else {
+                    arrLivros.push({
+                      idlivro: $("#GrdConsultaLivro").data("kendoGrid").dataSource.data().length + 1,
+                      dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+                      nmautor: $("#frmCadastroLivro #nmAutor").val(),
+                      flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
+                      nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(),
+                      dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
+                      fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+                    })
+                  }
                 }
+                $("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
+                console.log(arrLivros)
               }
             },
             {
@@ -103,6 +132,25 @@
     //-----------------------------------------------------------------------------------//
     // Ações diversas da tela de manutenção
     //-----------------------------------------------------------------------------------//
+    if ($("#frmConsultaLivro #idLivro").val() != "") {
+      console.log("editando")
+
+      let nrIndiceId = arrLivros.findIndex(i => i.idLivro == $("#frmConsultaLivro #idLivro").dataItem(arrLivros).val())
+      $("#frmCadastroLivro #idLivro").val(arrLivros[nrIndiceId].idlivro);
+      $("#frmCadastroLivro #dsTitulo").val(arrLivros[nrIndiceId].dstitulo);
+      $("#frmCadastroLivro #nmAutor").val(arrLivros[nrIndiceId].nmautor);
+      $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(arrLivros[nrIndiceId].flgenero);
+      $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(arrLivros[nrIndiceId].nrpagina);
+      $("#frmCadastroLivro #dtPublicacao").val(arrLivros[nrIndiceId].dtpublicacao);
+      $("#frmCadastroLivro #flDisponivel").prop("checked", arrLivros[nrIndiceId].fldisponivel == "Sim")
+    } else {
+      console.log("incluindo")
+    }
+
+    // let GrdConsultaLivro = $("#frmConsultaLivro #GrdConsultaLivro").data("kendoGrid");
+    // let rstGrid = nrIndiceId.dataItem(nrIndiceId.select());
+
+
     // Açõa para centralizar a janela
     $("#WinCadastroLivro").data("kendoWindow").center().open()
     //-----------------------------------------------------------------------------------//
@@ -118,37 +166,37 @@
           ID:
         </td>
         <td>
-          <input id="idlivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
+          <input id="idLivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
         </td>
       </tr>
     </table>
-    <table>
+    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
       <tr>
         <td style="text-align: right; width: 120px;">
           Titulo:
         </td>
         <td>
-          <input id="nmtitulo" type="text" class="k-textbox" style="width: 600px">
+          <input id="dsTitulo" type="text" class="k-textbox" style="width: 600px">
         </td>
       </tr>
     </table>
-    <table>
+    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
       <tr>
         <td style="text-align: right; width: 120px;">
           Autor:
         </td>
         <td>
-          <input id="nmautor" type="text" class="k-textbox" style="width: 600px;">
+          <input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
         </td>
       </tr>
     </table>
-    <table>
+    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
       <tr>
         <td style="text-align: right; width: 120px;" class="k-required">
           Genero:
         </td>
         <td>
-          <select id="flgenero" style="width: 600px;">
+          <select id="flGenero" style="width: 600px;">
             <option value="SP">Suspense</option>
             <option value="TR">Terror</option>
             <option value="RM">Romance</option>
@@ -156,27 +204,27 @@
         </td>
       </tr>
     </table>
-    <table>
+    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
       <tr>
         <td style="text-align: right; width: 120px;" class="k-required">
           Numero de Páginas:
         </td>
         <td>
-          <input id="nrpaginas" style="width: 80px;">
+          <input id="nrPagina" style="width: 80px;">
         </td>
-        <td style="text-align: right; width: 391px;" class="k-required">
+        <td style="text-align: right; width: 370px;" class="k-required">
           Data de Publicação:
         </td>
         <td>
-          <input id="dtpublicacao" style="width: 120px;">
+          <input id="dtPublicacao" style="width: 120px;">
         </td>
       </tr>
     </table>
-    <table>
+    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
       <tr>
         <td>
-          <input id="fldisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
-          <label for="fldisponivel" class="checkbox-label">Disponivel</label>
+          <input id="flDisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
+          <label for="flDisponivel" class="checkbox-label">Disponivel</label>
         </td>
       </tr>
     </table>

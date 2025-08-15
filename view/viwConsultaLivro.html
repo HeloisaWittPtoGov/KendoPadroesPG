@@ -165,7 +165,8 @@
                 "tabindex": "30"
               },
               click: function () {
-                OpenWindow(true, "CadastroLivro")
+                $("#frmConsultaLivro #idLivro").val("")
+                OpenWindow(true, "CadastroLivro");
               }
             },
             {
@@ -178,7 +179,11 @@
               },
               enable: false,
               click: function () {
+                let GrdConsultaLivro = $("#frmConsultaLivro #GrdConsultaLivro").data("kendoGrid");
+                let rstGrid = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
+                $("#frmConsultaLivro #idLivro").val(rstGrid.idlivro)
 
+                OpenWindow(true, "CadastroLivro");
               }
             },
           ]
@@ -202,8 +207,9 @@
         model: {
           fields: getModelDataSource(arrDataSource)
         }
-      }
+      },
     })
+
     //-----------------------------------------------------------------------------------//
 
     //-----------------------------------------------------------------------------------//
@@ -237,6 +243,9 @@
       dataBound: function (e) {
       },
       filter: function (e) {
+      },
+      change: function () {
+        $("#BarAcoes").data("kendoToolBar").enable("#BtnEditar")
       }
     })
 
@@ -263,6 +272,8 @@
 
 <div class="k-form">
   <form id="frmConsultaLivro">
+    <input id="idLivro" type="hidden">
+
     <div id="splConsulta">
       <div id="splHeader">
         <div class="k-bg-blue screen-filter-content">
