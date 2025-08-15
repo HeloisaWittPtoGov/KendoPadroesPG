@@ -1,114 +1,143 @@
 <script>
-	$(function () {
-		$("#BarAcoes").kendoToolBar({
-			items: [
-				{
-					type: "spacer",
-				},
-				{
-					type: "buttonGroup",
-					buttons: [
-						{
-							id: "BtnGravar",
-							spriteCssClass: "k-pg-icon k-i-l1-c5",
-							text: "Incluir",
-							group: "actions",
-							attributes: {
-								"tabindex": "30"
-							},
-						},
-						{
-							id: "BtnExcluir",
-							spriteCssClass: "k-pg-icon k-i-l1-c7",
-							text: "Excluir",
-							group: "actions",
-							attributes: {
-								"tabindex": "31"
-							},
-						},
-						{
-							id: "BtnLimpar",
-							spriteCssClass: "k-pg-icon k-i-l1-c6",
-							text: "Limpar",
-							group: "actions",
-							attributes: {
-								"tabindex": "32"
-							},
-						},
-						{
-							id: "BtnFechar",
-							spriteCssClass: "k-pg-icon k-i-l1-c4",
-							text: "Fechar",
-							group: "actions",
-							attributes: {
-								"tabindex": "33"
-							},
-						}
-					]
-				}
-			]
-		})
+  $(function () {
+    $("#frmCadastroLivro #flGenero").kendoDropDownList({
 
-	})
+    })
+
+    $("#frmCadastroLivro #nrPaginas").kendoNumericTextBox()
+
+    $("#frmCadastroLivro #dtPublicacao").kendoDatePicker({
+      format: "dd/MM/yyyy"
+    })
+
+    $("#frmCadastroLivro #dtPublicacao").kendoMaskedTextBox({
+      mask: "00/00/0000"
+    })
+
+    $("#frmCadastroLivro #BarAcoes").kendoToolBar({
+      items: [
+        {
+          type: "spacer",
+        },
+        {
+          type: "buttonGroup",
+          buttons: [
+            {
+              id: "BtnGravar",
+              spriteCssClass: "k-pg-icon k-i-l1-c5",
+              text: "Gravar",
+              group: "actions",
+              attributes: {
+                "tabindex": "30"
+              },
+            },
+            {
+              id: "BtnExcluir",
+              spriteCssClass: "k-pg-icon k-i-l1-c7",
+              text: "Excluir",
+              group: "actions",
+              attributes: {
+                "tabindex": "31"
+              },
+            },
+            {
+              id: "BtnLimpar",
+              spriteCssClass: "k-pg-icon k-i-l1-c6",
+              text: "Limpar",
+              group: "actions",
+              attributes: {
+                "tabindex": "32"
+              },
+            },
+            {
+              id: "BtnFechar",
+              spriteCssClass: "k-pg-icon k-i-l1-c4",
+              text: "Fechar",
+              group: "actions",
+              attributes: {
+                "tabindex": "33"
+              },
+            }
+          ]
+        }
+      ]
+    })
+
+    $("#WinCadastroLivro").data("kendoWindow").center().open()
+  })
 </script>
 
 <form id="frmCadastroLivro" enctype="multipart/form-data">
-	<div class="k-form">
-		<table>
-			<tr>
-				<td style="text-align: right; width: 120px;">
-					ID:
-				</td>
-				<td>
-					<input id="idLivro" type="text" class="k-textbox k-input-disable" style="width: 80px;">
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align: right; width: 120px;">
-					Titulo:
-				</td>
-				<td>
-					<input id="nmTitulo" type="text" class="k-textbox" style="width: 600px">
-				</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td style="text-align: right; width: 120px;">
-					Autor:
-				</td>
-				<td>
-					<input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
-				</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td style="text-align: right; width: 120px;" class="k-required">
-					Categoria:
-				</td>
-				<td>
-					<input id="nmCategoria" style="width: 600px;">
-				</td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td style="text-align: right; width: 120px;" class="k-required">
-					Numero de Páginas:
-				</td>
-				<td>
-					<input id="vlPaginas" style="width: 80px;">
-				</td>
-				<td style="text-align: right; width: 120px;" class="k-required">
-					Data de Publicação:
-				</td>
-				<td>
-					<input id="dtPublicao" style="width: 100px;">
-				</td>
-			</tr>
-		</table>
+  <div class="k-form">
+    <table>
+      <tr>
+        <td style="text-align: right; width: 120px;">
+          ID:
+        </td>
+        <td>
+          <input id="idLivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td style="text-align: right; width: 120px;">
+          Titulo:
+        </td>
+        <td>
+          <input id="nmTitulo" type="text" class="k-textbox" style="width: 600px">
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td style="text-align: right; width: 120px;">
+          Autor:
+        </td>
+        <td>
+          <input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td style="text-align: right; width: 120px;" class="k-required">
+          Categoria:
+        </td>
+        <td>
+          <select id="flGenero" style="width: 600px;">
+            <option value="SP">Suspense</option>
+            <option value="TR">Terror</option>
+            <option value="RM">Romance</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td style="text-align: right; width: 120px;" class="k-required">
+          Numero de Páginas:
+        </td>
+        <td>
+          <input id="nrPaginas" style="width: 80px;">
+        </td>
+        <td style="text-align: right; width: 391px;" class="k-required">
+          Data de Publicação:
+        </td>
+        <td>
+          <input id="dtPublicacao" style="width: 120px;">
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td>
+          <input id="flDisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
+          <label for="flDisponivel" class="checkbox-label">Disponivel</label>
+        </td>
+      </tr>
+    </table>
+    <div id="BarAcoes" style="text-align: right; border-bottom-width: 0px; height: 28px;"></div>
+  </div>
 
-	</div>
-	<div id="BarAcoes"></div>
 </form>

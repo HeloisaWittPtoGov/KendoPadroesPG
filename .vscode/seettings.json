@@ -1,0 +1,11 @@
+{
+  "editor.tabSize": 2,
+  "files.encoding": "iso88591",
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "[php]": {
+    "editor.wordSeparators": "`~!@#%^&*()-=+[{]}\\|;:'\",.<>/?"
+  },
+  "intelephense.environment.phpVersion": "5.6.0",
+  "intelephense.diagnostics.enable": false
+}
