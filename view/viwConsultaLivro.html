@@ -35,11 +35,11 @@
 
         showPreview: "true",
         widthPreview: "600",
-        positionPreview: "2",
+        positionPreview: "3",
         indiceTabPreview: "tabDadosGerais",
       },
       {
-        name: "nmAutor",
+        name: "nmautor",
         type: "string",
         label: "Autor",
         visibleFilter: "true",
@@ -53,11 +53,11 @@
 
         showPreview: "true",
         widthPreview: "600",
-        positionPreview: "3",
+        positionPreview: "4",
         indiceTabPreview: "tabDadosGerais",
       },
       {
-        name: "flGenero",
+        name: "flgenero",
         type: "string",
         label: "Genero",
         visibleFilter: "true",
@@ -71,12 +71,12 @@
 
         showPreview: "true",
         widthPreview: "600",
-        positionPreview: "4",
+        positionPreview: "5",
         indiceTabPreview: "tabDadosGerais",
       },
       {
-        name: "nrPaginas",
-        type: "interger",
+        name: "nrpagina",
+        type: "integer",
         label: "N° Páginas",
         visibleFilter: "true",
         orderFilter: "5",
@@ -88,45 +88,47 @@
         attributesGrid: "text-aling: center",
 
         showPreview: "true",
-        widthPreview: "120px",
-        positionPreview: "5",
+        widthPreview: "120",
+        positionPreview: "6",
         indiceTabPreview: "tabDadosGerais"
       },
       {
-        name: "dtPublicacao",
+        name: "dtpublicacao",
         type: "date",
         label: "Data Publicação",
         visibleFilter: "true",
         orderFilter: "6",
 
         orderGrid: "6",
-        widthGrid: "180px",
+        widthGrid: "180",
         hiddenGrid: "false",
         headerAttributesGrid: "text-aling: center",
         attributesGrid: "text-aling: center",
 
         showPreview: "true",
-        widthPreview: "120px",
-        positionPreview: "6",
+        widthPreview: "120",
+        positionPreview: "2",
         indiceTabPreview: "tabDadosGerais",
+        togetherPreview: "idlivro",
       },
       {
-        name: "flDisponivel",
-        type: "",
+        name: "fldisponivel",
+        type: "string",
         label: "Disponível",
         visibleFilter: "true",
         orderFilter: "7",
 
         orderGrid: "7",
-        widthGrid: "100px",
+        widthGrid: "100",
         hiddenGrid: "false",
         headerAttributesGrid: "text-aling:center",
         attributesGrid: "text-aling: center",
 
         showPreview: "true",
-        widthPreview: "120px",
+        widthPreview: "120",
         positionPreview: "7",
-        indiceTabPreview: "tabDadosGerais"
+        indiceTabPreview: "tabDadosGerais",
+        togetherPreview: "nrpagina"
       }
 
     ]
@@ -191,8 +193,8 @@
     var DtsConsultaLivro = new kendo.data.DataSource({
       pageSize: 100,
       transport: {
-        read: function () {
-
+        read: function (options) {
+          options.success([])
         }
       },
       schema: {
@@ -229,7 +231,7 @@
       columns: getColumnsQuery(arrDataSource),
       columnShow: function (e) {
       },
-      ColumnHide: function (e) {
+      columnHide: function (e) {
       },
       dataBound: function (e) {
       },
@@ -237,7 +239,7 @@
       }
     })
 
-    $("#frmConsultaLivro #GrdConsultaLivro").on("dblclick", function () {
+    $("#frmConsultaLivro #GrdConsultaLivro").on("dblclick", " tbody> tr", function () {
 
     })
     //-----------------------------------------------------------------------------------//
@@ -245,14 +247,6 @@
     //-----------------------------------------------------------------------------------//
     //Ações diversas da tela de consulta
     //-----------------------------------------------------------------------------------//
-    $("#frmConsultaLivro #splConsulta").kendoSplitter({
-      panes: [
-        { size: "12%", min: "12%" },
-        { size: "65%", min: "25%" },
-        { size: "23%", min: "23%" }
-      ],
-      orientation: "vertical"
-    })
 
     $("#WinConsultaLivro").data("kendoWindow").open()
     //-----------------------------------------------------------------------------------//
@@ -298,7 +292,7 @@
         </div>
       </div>
       <div id="splMiddle">
-        <div id="GrdConsultaLivro"></div>
+        <div id="GrdConsultaLivro" data-use-state-screen="true" data-get-state-scree="false" style="height: auto"></div>
       </div>
       <div id="splFooter">
         <div id="bottonConsultaLivro">
