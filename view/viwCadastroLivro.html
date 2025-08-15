@@ -4,15 +4,15 @@
     //-----------------------------------------------------------------------------------//
     // Instanciando os campos da tela de cadastro
     //-----------------------------------------------------------------------------------//
-    $("#frmCadastroLivro #flGenero").kendoDropDownList({})
+    $("#frmCadastroLivro #flgenero").kendoDropDownList({})
 
-    $("#frmCadastroLivro #nrPaginas").kendoNumericTextBox()
+    $("#frmCadastroLivro #nrpaginas").kendoNumericTextBox()
 
-    $("#frmCadastroLivro #dtPublicacao").kendoDatePicker({
+    $("#frmCadastroLivro #dtpublicacao").kendoDatePicker({
       format: "dd/MM/yyyy"
     })
 
-    $("#frmCadastroLivro #dtPublicacao").kendoMaskedTextBox({
+    $("#frmCadastroLivro #dtpublicacao").kendoMaskedTextBox({
       mask: "00/00/0000"
     })
     //-----------------------------------------------------------------------------------//
@@ -36,6 +36,36 @@
               attributes: {
                 "tabindex": "30"
               },
+              click: function () {
+                let nrIdCadastro = $("#idlivro").val()
+                let nrIndiceId = arrLivros.findIndex(i => i.idlivro === nrIdCadastro)
+
+                let strMensagem = ""
+
+                if (("#WinCadastroLivro #dstitulo").val().trim() == "") {
+                  strMensagem = strMensagem + "O campo título é de preenchimento obrigatório.\n"
+                } else {
+                  let dsTituloInformado = $("#WinCadastroLivro #dstitulo").val().trim().toLowerCase()
+                  let strVerificaTitulo = arrLivros.find(function (i) {
+                    return i.dsTitulo.trim().toLowerCase() == dsTituloInformado && i.idLivro != i.nrIdCadastro
+                  })
+                  if (verificaTitulo) {
+                    strMensagem = strMensagem + "Já Existe um livro cadastrado com o titulo informado.\n"
+                  }
+                }
+                if ($("#WinCadastroLivro #nmautor").val().trim() = "") {
+                  strMensagem = strMensagem + "O campo Autor é de preenchimento obrigatório.\n"
+                }
+                if ($("#WinCadastroLivro #flgenero").val().trim() = "") {
+                  strMensagem = strMensagem + "O campo Genero é de preenchimento obrigstório.\n"
+                }
+                if ($("#WinCadastroLivro #nrpagina").val().trim() <= 0) {
+                  strMensagem = strMensagem + "O numero de páginas deve ser superior a zero."
+                }
+                if (strMensagem != "") {
+                  alert(strMensagem)
+                }
+              }
             },
             {
               id: "BtnExcluir",
@@ -88,7 +118,7 @@
           ID:
         </td>
         <td>
-          <input id="idLivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
+          <input id="idlivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
         </td>
       </tr>
     </table>
@@ -98,7 +128,7 @@
           Titulo:
         </td>
         <td>
-          <input id="nmTitulo" type="text" class="k-textbox" style="width: 600px">
+          <input id="nmtitulo" type="text" class="k-textbox" style="width: 600px">
         </td>
       </tr>
     </table>
@@ -108,7 +138,7 @@
           Autor:
         </td>
         <td>
-          <input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
+          <input id="nmautor" type="text" class="k-textbox" style="width: 600px;">
         </td>
       </tr>
     </table>
@@ -118,7 +148,7 @@
           Genero:
         </td>
         <td>
-          <select id="flGenero" style="width: 600px;">
+          <select id="flgenero" style="width: 600px;">
             <option value="SP">Suspense</option>
             <option value="TR">Terror</option>
             <option value="RM">Romance</option>
@@ -132,21 +162,21 @@
           Numero de Páginas:
         </td>
         <td>
-          <input id="nrPaginas" style="width: 80px;">
+          <input id="nrpaginas" style="width: 80px;">
         </td>
         <td style="text-align: right; width: 391px;" class="k-required">
           Data de Publicação:
         </td>
         <td>
-          <input id="dtPublicacao" style="width: 120px;">
+          <input id="dtpublicacao" style="width: 120px;">
         </td>
       </tr>
     </table>
     <table>
       <tr>
         <td>
-          <input id="flDisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
-          <label for="flDisponivel" class="checkbox-label">Disponivel</label>
+          <input id="fldisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
+          <label for="fldisponivel" class="checkbox-label">Disponivel</label>
         </td>
       </tr>
     </table>

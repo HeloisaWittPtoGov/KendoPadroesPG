@@ -194,7 +194,8 @@
       pageSize: 100,
       transport: {
         read: function (options) {
-          options.success([])
+          options.success(arrLivros)
+          console.log(arrLivros)
         }
       },
       schema: {
