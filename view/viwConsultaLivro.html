@@ -1,321 +1,339 @@
 <script>
-  $(function () {
+	$(function () {
 
-    var arrDataSource = [
-      {
-        name: "idlivro",
-        type: "integer",
-        label: "Id",
-        visibleFilter: "true",
-        orderFilter: "2",
+		var arrDataSource = [
+			{
+				name: "idlivro",
+				type: "integer",
+				label: "Id",
+				visibleFilter: "true",
+				orderFilter: "2",
 
-        orderGrid: "1",
-        widthGrid: "70",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling: center",
-        attributesGrid: "texta-aling: center",
+				orderGrid: "1",
+				widthGrid: "70",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling: center",
+				attributesGrid: "texta-aling: center",
 
-        showPreview: "true",
-        widthPreview: "70",
-        positionPreview: "1",
-        indiceTabPreview: "tabDadosGerais",
-      },
-      {
-        name: "dstitulo",
-        type: "string",
-        label: "Titulo",
-        visibleFilter: "true",
-        orderFilter: "1",
+				showPreview: "true",
+				widthPreview: "70",
+				positionPreview: "1",
+				indiceTabPreview: "tabDadosGerais",
+			},
+			{
+				name: "dstitulo",
+				type: "string",
+				label: "Titulo",
+				visibleFilter: "true",
+				orderFilter: "1",
 
-        orderGrid: "2",
-        widthGrid: "",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling:center;",
-        attributesGrid: "text-aling: center",
+				orderGrid: "2",
+				widthGrid: "",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling:center;",
+				attributesGrid: "text-aling: center",
 
-        showPreview: "true",
-        widthPreview: "600",
-        positionPreview: "3",
-        indiceTabPreview: "tabDadosGerais",
-      },
-      {
-        name: "nmautor",
-        type: "string",
-        label: "Autor",
-        visibleFilter: "true",
-        orderFilter: "3",
+				showPreview: "true",
+				widthPreview: "600",
+				positionPreview: "3",
+				indiceTabPreview: "tabDadosGerais",
+			},
+			{
+				name: "nmautor",
+				type: "string",
+				label: "Autor",
+				visibleFilter: "true",
+				orderFilter: "3",
 
-        orderGrid: "3",
-        widthGrid: "",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling: center",
-        attributesGrid: "text-aling: center",
+				orderGrid: "3",
+				widthGrid: "",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling: center",
+				attributesGrid: "text-aling: center",
 
-        showPreview: "true",
-        widthPreview: "600",
-        positionPreview: "4",
-        indiceTabPreview: "tabDadosGerais",
-      },
-      {
-        name: "flgenero",
-        type: "string",
-        label: "Genero",
-        visibleFilter: "true",
-        orderFilter: "4",
+				showPreview: "true",
+				widthPreview: "600",
+				positionPreview: "4",
+				indiceTabPreview: "tabDadosGerais",
+			},
+			{
+				name: "flgenero",
+				type: "string",
+				label: "Genero",
+				visibleFilter: "true",
+				orderFilter: "4",
 
-        orderGrid: "4",
-        widthGrid: "",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling: center",
-        attributesGrid: "text-aling: center",
+				orderGrid: "4",
+				widthGrid: "",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling: center",
+				attributesGrid: "text-aling: center",
+				templateGrid: function (data) {
+					console.log(data)
+					switch (data.flGenero) {
+						case "SP":
+							return "Suspense"
+						case "TR":
+							return "Terror"
+						case "RM":
+							return "Romance"
+						default:
+							return data.flgenero || ""
+					}
+				},
 
-        showPreview: "true",
-        widthPreview: "600",
-        positionPreview: "5",
-        indiceTabPreview: "tabDadosGerais",
-      },
-      {
-        name: "nrpagina",
-        type: "integer",
-        label: "N° Páginas",
-        visibleFilter: "true",
-        orderFilter: "5",
+				showPreview: "true",
+				widthPreview: "600",
+				positionPreview: "5",
+				indiceTabPreview: "tabDadosGerais",
+			},
+			{
+				name: "nrpagina",
+				type: "integer",
+				label: "N° Páginas",
+				visibleFilter: "true",
+				orderFilter: "5",
 
-        orderGrid: "5",
-        widthGrid: "180",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling:center",
-        attributesGrid: "text-aling: center",
+				orderGrid: "5",
+				widthGrid: "180",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling:center",
+				attributesGrid: "text-aling: center",
 
-        showPreview: "true",
-        widthPreview: "120",
-        positionPreview: "6",
-        indiceTabPreview: "tabDadosGerais"
-      },
-      {
-        name: "dtpublicacao",
-        type: "date",
-        label: "Data Publicação",
-        visibleFilter: "true",
-        orderFilter: "6",
+				showPreview: "true",
+				widthPreview: "120",
+				positionPreview: "6",
+				indiceTabPreview: "tabDadosGerais"
+			},
+			{
+				name: "dtpublicacao",
+				type: "date",
+				label: "Data Publicação",
+				visibleFilter: "true",
+				orderFilter: "6",
 
-        orderGrid: "6",
-        widthGrid: "180",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling: center",
-        attributesGrid: "text-aling: center",
+				orderGrid: "6",
+				widthGrid: "180",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling: center",
+				attributesGrid: "text-aling: center",
 
-        showPreview: "true",
-        widthPreview: "120",
-        positionPreview: "2",
-        indiceTabPreview: "tabDadosGerais",
-        togetherPreview: "idlivro",
-      },
-      {
-        name: "fldisponivel",
-        type: "string",
-        label: "Disponível",
-        visibleFilter: "true",
-        orderFilter: "7",
+				showPreview: "true",
+				widthPreview: "120",
+				positionPreview: "2",
+				indiceTabPreview: "tabDadosGerais",
+				togetherPreview: "idlivro",
+			},
+			{
+				name: "fldisponivel",
+				type: "string",
+				label: "Disponível",
+				visibleFilter: "true",
+				orderFilter: "7",
 
-        orderGrid: "7",
-        widthGrid: "100",
-        hiddenGrid: "false",
-        headerAttributesGrid: "text-aling:center",
-        attributesGrid: "text-aling: center",
+				orderGrid: "7",
+				widthGrid: "100",
+				hiddenGrid: "false",
+				headerAttributesGrid: "text-aling:center",
+				attributesGrid: "text-aling: center",
 
-        showPreview: "true",
-        widthPreview: "120",
-        positionPreview: "7",
-        indiceTabPreview: "tabDadosGerais",
-        togetherPreview: "nrpagina"
-      }
+				showPreview: "true",
+				widthPreview: "120",
+				positionPreview: "7",
+				indiceTabPreview: "tabDadosGerais",
+				togetherPreview: "nrpagina"
+			}
 
-    ]
+		]
 
-    //-----------------------------------------------------------------------------------//
-    //Configura tela para usar splitter
-    //-----------------------------------------------------------------------------------//
-    arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro")
-    //-----------------------------------------------------------------------------------//
+		//-----------------------------------------------------------------------------------//
+		//Configura tela para usar splitter
+		//-----------------------------------------------------------------------------------//
+		arrDataSource = LoadConfigurationQuery(arrDataSource, "ConsultaLivro")
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //instanciando os campos combo da consulta
-    //-----------------------------------------------------------------------------------//
-    createPgFilter(arrDataSource, "ConsultaLivro")
-    //-----------------------------------------------------------------------------------//
+		//-----------------------------------------------------------------------------------//
+		//instanciando os campos combo da consulta
+		//-----------------------------------------------------------------------------------//
+		createPgFilter(arrDataSource, "ConsultaLivro")
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Area de botões de ação
-    //-----------------------------------------------------------------------------------//
-    $("#frmConsultaLivro #BarAcoes").kendoToolBar({
-      items: [
-        {
-          type: "spacer"
-        },
-        {
-          type: "buttonGroup",
-          buttons: [
-            {
-              id: "BtnIncluir",
-              spriteCSSClass: "k-pg-icon k-i-l1-c1",
-              text: "Incluir",
-              group: "actions",
-              attributes: {
-                "tabindex": "30"
-              },
-              click: function () {
-                $("#frmConsultaLivro #idLivro").val("")
-                OpenWindow(true, "CadastroLivro");
-              }
-            },
-            {
-              id: "BtnEditar",
-              sprinteCssClass: "k-pg-icon k-i-l1-c3",
-              text: "Editar",
-              group: "actions",
-              attributes: {
-                "tabindex": "31"
-              },
-              enable: false,
-              click: function () {
-                let GrdConsultaLivro = $("#frmConsultaLivro #GrdConsultaLivro").data("kendoGrid");
-                let rstGrid = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
-                $("#frmConsultaLivro #idLivro").val(rstGrid.idlivro)
+		//-----------------------------------------------------------------------------------//
+		//Area de botões de ação
+		//-----------------------------------------------------------------------------------//
+		$("#frmConsultaLivro #BarAcoes").kendoToolBar({
+			items: [
+				{
+					type: "spacer"
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
+							id: "BtnIncluir",
+							spriteCSSClass: "k-pg-icon k-i-l1-c1",
+							text: "Incluir",
+							group: "actions",
+							attributes: {
+								"tabindex": "30"
+							},
+							click: function () {
+								$("#frmConsultaLivro #idLivro").val("")
+								OpenWindow(true, "CadastroLivro");
+							}
+						},
+						{
+							id: "BtnEditar",
+							sprinteCssClass: "k-pg-icon k-i-l1-c3",
+							text: "Editar",
+							group: "actions",
+							attributes: {
+								"tabindex": "31"
+							},
+							enable: false,
+							click: function () {
+								let GrdConsultaLivro = $("#frmConsultaLivro #GrdConsultaLivro").data("kendoGrid");
+								let rstGrid = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
+								$("#frmConsultaLivro #idLivro").val(rstGrid.idlivro)
 
-                OpenWindow(true, "CadastroLivro");
-              }
-            },
-          ]
-        }
-      ]
-    })
-    //-----------------------------------------------------------------------------------//
+								OpenWindow(true, "CadastroLivro");
+							}
+						},
+					]
+				}
+			]
+		})
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Instanciando dataSource da consulta
-    //-----------------------------------------------------------------------------------//
-    var DtsConsultaLivro = new kendo.data.DataSource({
-      pageSize: 100,
-      transport: {
-        read: function (options) {
-          options.success(arrLivros)
-          console.log(arrLivros)
-        }
-      },
-      schema: {
-        model: {
-          fields: getModelDataSource(arrDataSource)
-        }
-      },
-    })
+		//-----------------------------------------------------------------------------------//
+		//Instanciando dataSource da consulta
+		//-----------------------------------------------------------------------------------//
+		var DtsConsultaLivro = new kendo.data.DataSource({
+			pageSize: 100,
+			transport: {
+				read: function (options) {
+					options.success(arrLivros)
+					console.log(arrLivros)
+				}
+			},
+			schema: {
+				model: {
+					fields: getModelDataSource(arrDataSource)
+				}
+			},
+		})
 
-    //-----------------------------------------------------------------------------------//
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Instanciando grid da consulta
-    //-----------------------------------------------------------------------------------//
-    $("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
-      dataSource: DtsConsultaLivro,
-      heigth: getHeightGridQuery("ConsultaLivros"),
-      selectable: "row",
-      resizable: true,
-      reorderable: true,
-      navigatable: true,
-      columnMenu: true,
-      filterable: true,
-      sortable: {
-        mode: "multiple",
-        allowUnsort: true
-      },
-      sort: function () {
-      },
-      pageable: {
-        pageSizes: [100, 300, 500, "all"],
-        numeric: false,
-        input: true
-      },
-      columns: getColumnsQuery(arrDataSource),
-      columnShow: function (e) {
-      },
-      columnHide: function (e) {
-      },
-      dataBound: function (e) {
-      },
-      filter: function (e) {
-      },
-      change: function () {
-        $("#BarAcoes").data("kendoToolBar").enable("#BtnEditar")
-      }
-    })
+		//-----------------------------------------------------------------------------------//
+		//Instanciando grid da consulta
+		//-----------------------------------------------------------------------------------//
+		$("#frmConsultaLivro #GrdConsultaLivro").kendoGrid({
+			dataSource: DtsConsultaLivro,
+			heigth: getHeightGridQuery("ConsultaLivros"),
+			selectable: "row",
+			resizable: true,
+			reorderable: true,
+			navigatable: true,
+			columnMenu: true,
+			filterable: true,
+			sortable: {
+				mode: "multiple",
+				allowUnsort: true
+			},
+			sort: function () {
+			},
+			pageable: {
+				pageSizes: [100, 300, 500, "all"],
+				numeric: false,
+				input: true
+			},
+			columns: getColumnsQuery(arrDataSource),
+			columnShow: function (e) {
+			},
+			columnHide: function (e) {
+			},
+			dataBound: function (e) {
+			},
+			filter: function (e) {
+			},
+			change: function () {
+				$("#BarAcoes").data("kendoToolBar").enable("#BtnEditar")
+			}
+		})
 
-    $("#frmConsultaLivro #GrdConsultaLivro").on("dblclick", " tbody> tr", function () {
+		$("#frmConsultaLivro #GrdConsultaLivro").on("dblclick", " tbody> tr", function () {
 
-    })
-    //-----------------------------------------------------------------------------------//
+		})
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Ações diversas da tela de consulta
-    //-----------------------------------------------------------------------------------//
+		//-----------------------------------------------------------------------------------//
+		//Ações diversas da tela de consulta
+		//-----------------------------------------------------------------------------------//
 
-    $("#WinConsultaLivro").data("kendoWindow").open()
-    //-----------------------------------------------------------------------------------//
+		$("#WinConsultaLivro").data("kendoWindow").open()
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Cria Tela de visualização do item do grid na consulta e faz outros ajustes
-    //-----------------------------------------------------------------------------------//
-    createScreenPreview(arrDataSource, "ConsultaLivro")
-    //-----------------------------------------------------------------------------------//
+		//-----------------------------------------------------------------------------------//
+		//Cria Tela de visualização do item do grid na consulta e faz outros ajustes
+		//-----------------------------------------------------------------------------------//
+		createScreenPreview(arrDataSource, "ConsultaLivro")
+		//-----------------------------------------------------------------------------------//
 
-  })
+	})
 </script>
 
 <div class="k-form">
-  <form id="frmConsultaLivro">
-    <input id="idLivro" type="hidden">
+	<form id="frmConsultaLivro">
+		<input id="idLivro" type="hidden">
 
-    <div id="splConsulta">
-      <div id="splHeader">
-        <div class="k-bg-blue screen-filter-content">
-          <table>
-            <tr>
-              <td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">
-                Filtro(s):
-              </td>
-              <td>
-                <div id="fltConsultaLivro" style="width: auto; "></div>
-              </td>
-              <td style="vertical-align: bottom;padding-bottom: 5px;">
-                <span id="BtnPesquisar" style="cursor: pointer;width: 100px;height: 24px;" title="Pesquisar"
-                  data-role="button" class="k-button k-button-icon" role="button" aria-disabled="false" tabindex="29">
-                  <span class="k-sprite k-pg-icon k-i-l1-c2" style="margin: 0 auto; text-align: center;"></span>
-                  <span style="margin: 0 auto; margin-right: 3px;">Pesquisar</span>
-                </span>
+		<div id="splConsulta">
+			<div id="splHeader">
+				<div class="k-bg-blue screen-filter-content">
+					<table>
+						<tr>
+							<td style="width: 120px;text-align: right;vertical-align: top;padding-top: 6px;">
+								Filtro(s):
+							</td>
+							<td>
+								<div id="fltConsultaLivro" style="width: auto; "></div>
+							</td>
+							<td style="vertical-align: bottom;padding-bottom: 5px;">
+								<span id="BtnPesquisar" style="cursor: pointer;width: 100px;height: 24px;"
+									title="Pesquisar" data-role="button" class="k-button k-button-icon" role="button"
+									aria-disabled="false" tabindex="29">
+									<span class="k-sprite k-pg-icon k-i-l1-c2"
+										style="margin: 0 auto; text-align: center;"></span>
+									<span style="margin: 0 auto; margin-right: 3px;">Pesquisar</span>
+								</span>
 
-                <span id="BtnAddFilter" style="cursor: pointer;width: 21px !important;height: 21px !important"
-                  title="Adicionar Filtro" data-role="button" class="k-button k-button-icon" role="button"
-                  aria-disabled="false" tabindex="">
-                  <span class="k-sprite k-pg-icon k-i-l1-c1" style="margin: 0 auto;margin-top: 1.4px;"></span>
-                </span>
-              </td>
-            </tr>
-          </table>
-          <div id="BarAcoes" style="text-align: right; height: 28px"></div>
-        </div>
-      </div>
-      <div id="splMiddle">
-        <div id="GrdConsultaLivro" data-use-state-screen="true" data-get-state-scree="false" style="height: auto"></div>
-      </div>
-      <div id="splFooter">
-        <div id="bottonConsultaLivro">
-          <div id="tabStripConsultaLivro">
-            <ul>
-              <li id="tabDadosGerais" class="k-state-active">Detalhes</li>
-            </ul>
-            <div id="tabDadosGeraisVisualizacaoConsultaLivro"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </form>
+								<span id="BtnAddFilter"
+									style="cursor: pointer;width: 21px !important;height: 21px !important"
+									title="Adicionar Filtro" data-role="button" class="k-button k-button-icon"
+									role="button" aria-disabled="false" tabindex="">
+									<span class="k-sprite k-pg-icon k-i-l1-c1"
+										style="margin: 0 auto;margin-top: 1.4px;"></span>
+								</span>
+							</td>
+						</tr>
+					</table>
+					<div id="BarAcoes" style="text-align: right; height: 28px"></div>
+				</div>
+			</div>
+			<div id="splMiddle">
+				<div id="GrdConsultaLivro" data-use-state-screen="true" data-get-state-scree="false"
+					style="height: auto"></div>
+			</div>
+			<div id="splFooter">
+				<div id="bottonConsultaLivro">
+					<div id="tabStripConsultaLivro">
+						<ul>
+							<li id="tabDadosGerais" class="k-state-active">Detalhes</li>
+						</ul>
+						<div id="tabDadosGeraisVisualizacaoConsultaLivro"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>

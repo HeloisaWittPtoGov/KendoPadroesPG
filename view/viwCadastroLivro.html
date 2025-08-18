@@ -1,234 +1,254 @@
 <script>
-  $(function () {
-    console.log("2")
+	$(function () {
+		console.log("2")
 
-    //-----------------------------------------------------------------------------------//
-    // Instanciando os campos da tela de cadastro
-    //-----------------------------------------------------------------------------------//
-    $("#frmCadastroLivro #flGenero").kendoDropDownList({})
+		//-----------------------------------------------------------------------------------//
+		// Instanciando os campos da tela de cadastro
+		//-----------------------------------------------------------------------------------//
+		$("#frmCadastroLivro #flGenero").kendoDropDownList({})
 
-    $("#frmCadastroLivro #nrPagina").kendoNumericTextBox()
+		$("#frmCadastroLivro #nrPagina").kendoNumericTextBox()
 
-    $("#frmCadastroLivro #dtPublicacao").kendoDatePicker({
-      format: "dd/MM/yyyy"
-    })
+		$("#frmCadastroLivro #dtPublicacao").kendoDatePicker({
+			format: "dd/MM/yyyy"
+		})
 
-    $("#frmCadastroLivro #dtPublicacao").kendoMaskedTextBox({
-      mask: "00/00/0000"
-    })
-    //-----------------------------------------------------------------------------------//
+		$("#frmCadastroLivro #dtPublicacao").kendoMaskedTextBox({
+			mask: "00/00/0000"
+		})
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    //Barra de Ações
-    //-----------------------------------------------------------------------------------//
-    $("#frmCadastroLivro #BarAcoes").kendoToolBar({
-      items: [
-        {
-          type: "spacer",
-        },
-        {
-          type: "buttonGroup",
-          buttons: [
-            {
-              id: "BtnGravar",
-              spriteCssClass: "k-pg-icon k-i-l1-c5",
-              text: "Gravar",
-              group: "actions",
-              attributes: {
-                "tabindex": "30"
-              },
-              click: function () {
-                let nrIdCadastro = $("#frmCadastroLivro #idLivro").val();
-                let nrIndiceId = arrLivros.findIndex(i => i.idlivro == nrIdCadastro);
+		//-----------------------------------------------------------------------------------//
+		//Barra de Ações
+		//-----------------------------------------------------------------------------------//
+		$("#frmCadastroLivro #BarAcoes").kendoToolBar({
+			items: [
+				{
+					type: "spacer",
+				},
+				{
+					type: "buttonGroup",
+					buttons: [
+						{
+							id: "BtnGravar",
+							spriteCssClass: "k-pg-icon k-i-l1-c5",
+							text: "Gravar",
+							group: "actions",
+							attributes: {
+								"tabindex": "30"
+							},
+							click: function () {
+								let nrIdCadastro = $("#frmCadastroLivro #idLivro").val();
+								let nrIndiceId = arrLivros.findIndex(i => i.idlivro == nrIdCadastro);
 
-                let strMensagem = "";
+								let strMensagem = "";
 
-                if ($("#frmCadastroLivro #dsTitulo").val().trim() == "") {
-                  strMensagem = strMensagem + "O campo título é de preenchimento obrigatório.\n"
-                } else {
-                  let dsTituloInformado = $("#frmCadastroLivro #dstitulo").val().trim().toLowerCase();
-                  let strVerificaTitulo = arrLivros.find(function (i) {
-                    return i.dstitulo.trim().toLowerCase() == dsTituloInformado && i.idlivro != nrIdCadastro
-                  })
-                  if (strVerificaTitulo) {
-                    strMensagem = strMensagem + "Já Existe um livro cadastrado com o titulo informado.\n"
-                  }
-                }
+								if ($("#frmCadastroLivro #dsTitulo").val().trim() == "") {
+									strMensagem = strMensagem + "O campo título é de preenchimento obrigatório.\n"
+								} else {
+									let dsTituloInformado = $("#frmCadastroLivro #dsTitulo").val().trim().toLowerCase();
+									let strVerificaTitulo = arrLivros.find(function (i) {
+										return i.dstitulo.trim().toLowerCase() == dsTituloInformado && i.idlivro != nrIdCadastro
+									})
+									if (strVerificaTitulo) {
+										strMensagem = strMensagem + "Já Existe um livro cadastrado com o titulo informado.\n"
+									}
+								}
 
-                if ($("#frmCadastroLivro #nmAutor").val().trim() == "") {
-                  strMensagem = strMensagem + "O campo Autor é de preenchimento obrigatório.\n"
-                }
+								if ($("#frmCadastroLivro #nmAutor").val().trim() == "") {
+									strMensagem = strMensagem + "O campo Autor é de preenchimento obrigatório.\n"
+								}
 
-                if ($("#frmCadastroLivro #flGenero").val().trim() == "") {
-                  strMensagem = strMensagem + "O campo Genero é de preenchimento obrigstório.\n"
-                }
+								if ($("#frmCadastroLivro #flGenero").val().trim() == "") {
+									strMensagem = strMensagem + "O campo Genero é de preenchimento obrigstório.\n"
+								}
 
-                if ($("#frmCadastroLivro #nrPagina").val().trim() <= 0) {
-                  strMensagem = strMensagem + "O numero de páginas deve ser superior a zero."
-                }
+								if ($("#frmCadastroLivro #nrPagina").val().trim() <= 0) {
+									strMensagem = strMensagem + "O numero de páginas deve ser superior a zero."
+								}
 
-                if (strMensagem != "") {
-                  alert(strMensagem)
-                } else {
-                  if (nrIndiceId >= 0) {
-                    arrLivros[nrIndiceId] = {
-                      idlivro: nrIdCadastro,
-                      dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
-                      nmautor: $("#frmCadastroLivro #nmAutor").val(),
-                      flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
-                      nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumerictextBox").value(),
-                      dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
-                      fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
-                    }
-                  } else {
-                    arrLivros.push({
-                      idlivro: $("#GrdConsultaLivro").data("kendoGrid").dataSource.data().length + 1,
-                      dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
-                      nmautor: $("#frmCadastroLivro #nmAutor").val(),
-                      flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
-                      nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(),
-                      dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
-                      fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
-                    })
-                  }
-                }
-                $("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
-                console.log(arrLivros)
-              }
-            },
-            {
-              id: "BtnExcluir",
-              spriteCssClass: "k-pg-icon k-i-l1-c7",
-              text: "Excluir",
-              group: "actions",
-              attributes: {
-                "tabindex": "31"
-              },
-            },
-            {
-              id: "BtnLimpar",
-              spriteCssClass: "k-pg-icon k-i-l1-c6",
-              text: "Limpar",
-              group: "actions",
-              attributes: {
-                "tabindex": "32"
-              },
-            },
-            {
-              id: "BtnFechar",
-              spriteCssClass: "k-pg-icon k-i-l1-c4",
-              text: "Fechar",
-              group: "actions",
-              attributes: {
-                "tabindex": "33"
-              },
-            }
-          ]
-        }
-      ]
-    })
-    //-----------------------------------------------------------------------------------//
+								if (strMensagem != "") {
+									alert(strMensagem)
+								} else {
+									if (nrIndiceId >= 0) {
+										arrLivros[nrIndiceId] = {
+											idlivro: nrIdCadastro,
+											dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+											nmautor: $("#frmCadastroLivro #nmAutor").val(),
+											flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
+											nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumerictextBox").value(),
+											dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
+											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+										}
+									} else {
+										arrLivros.push({
+											idlivro: $("#GrdConsultaLivro").data("kendoGrid").dataSource.data().length + 1,
+											dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
+											nmautor: $("#frmCadastroLivro #nmAutor").val(),
+											flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
+											nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(),
+											dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
+											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+										})
+									}
+								}
+								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
+								console.log(arrLivros)
+							}
+						},
+						{
+							id: "BtnExcluir",
+							spriteCssClass: "k-pg-icon k-i-l1-c7",
+							text: "Excluir",
+							group: "actions",
+							attributes: {
+								"tabindex": "31"
+							},
+							click: function () {
+								let GrdConsultaLivro = $("#GrdConsultaLivro").data("kendoGrid");
+								let objLivro = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
+								let nrIndiceRemover = arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
+								arrLivros.splice(nrIndiceRemover, 1)
+								console.log(arrLivros)
+							}
+						},
+						{
+							id: "BtnLimpar",
+							spriteCssClass: "k-pg-icon k-i-l1-c6",
+							text: "Limpar",
+							group: "actions",
+							attributes: {
+								"tabindex": "32"
+							},
+							click: function () {
+								$("#frmCadastroLivro #idLivro").val("");
+								$("#frmCadastroLivro #dsTitulo").val("");
+								$("#frmCadastroLivro #nmAutor").val("");
+								$("#frmCadastroLivro #flGenero").data("kendoDropDownList").value("");
+								$("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value("");
+								$("#frmCadastroLivro #dtPublicacao").val("");
+								$("#frmCadastroLivro #flDisponivel").prop("checked", false)
+							}
+						},
+						{
+							id: "BtnFechar",
+							spriteCssClass: "k-pg-icon k-i-l1-c4",
+							text: "Fechar",
+							group: "actions",
+							attributes: {
+								"tabindex": "33"
+							},
+							click: function () {
+								$("#WinCadastroLivro").data("kendoWindow").close()
+							}
+						}
+					]
+				}
+			]
+		})
+		//-----------------------------------------------------------------------------------//
 
-    //-----------------------------------------------------------------------------------//
-    // Ações diversas da tela de manutenção
-    //-----------------------------------------------------------------------------------//
-    if ($("#frmConsultaLivro #idLivro").val() != "") {
-      console.log("editando")
+		//-----------------------------------------------------------------------------------//
+		// Ações diversas da tela de manutenção
+		//-----------------------------------------------------------------------------------//
+		if ($("#frmConsultaLivro #idLivro").val() != "") {
+			console.log("editando")
 
-      let nrIndiceId = arrLivros.findIndex(i => i.idLivro == $("#frmConsultaLivro #idLivro").dataItem(arrLivros).val())
-      $("#frmCadastroLivro #idLivro").val(arrLivros[nrIndiceId].idlivro);
-      $("#frmCadastroLivro #dsTitulo").val(arrLivros[nrIndiceId].dstitulo);
-      $("#frmCadastroLivro #nmAutor").val(arrLivros[nrIndiceId].nmautor);
-      $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(arrLivros[nrIndiceId].flgenero);
-      $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(arrLivros[nrIndiceId].nrpagina);
-      $("#frmCadastroLivro #dtPublicacao").val(arrLivros[nrIndiceId].dtpublicacao);
-      $("#frmCadastroLivro #flDisponivel").prop("checked", arrLivros[nrIndiceId].fldisponivel == "Sim")
-    } else {
-      console.log("incluindo")
-    }
+			let objGrid = $("#GrdConsultaLivro").data("kendoGrid");
+			let objSelecionado = objGrid.dataItem(objGrid.select());
+			let nrIndice = arrLivros.findIndex(i => i.idlivro == objSelecionado.idlivro);
 
-    // let GrdConsultaLivro = $("#frmConsultaLivro #GrdConsultaLivro").data("kendoGrid");
-    // let rstGrid = nrIndiceId.dataItem(nrIndiceId.select());
+			if (nrIndice >= 0) {
+				$("#frmCadastroLivro #idLivro").val(arrLivros[nrIndice].idlivro);
+				$("#frmCadastroLivro #dsTitulo").val(arrLivros[nrIndice].dstitulo);
+				$("#frmCadastroLivro #nmAutor").val(arrLivros[nrIndice].nmautor);
+				$("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(arrLivros[nrIndice].flgenero);
+				$("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(arrLivros[nrIndice].nrpagina);
+				$("#frmCadastroLivro #dtPublicacao").val(arrLivros[nrIndice].dtpublicacao);
+				$("#frmCadastroLivro #flDisponivel").prop("checked", arrLivros[nrIndice].fldisponivel == "Sim")
+			}
+		} else {
+			console.log("incluindo")
+		}
 
+		// Açõa para centralizar a janela
+		$("#WinCadastroLivro").data("kendoWindow").center().open()
+		//-----------------------------------------------------------------------------------//
 
-    // Açõa para centralizar a janela
-    $("#WinCadastroLivro").data("kendoWindow").center().open()
-    //-----------------------------------------------------------------------------------//
-
-  })
+	})
 </script>
 
 <form id="frmCadastroLivro" enctype="multipart/form-data">
-  <div class="k-form">
-    <table>
-      <tr>
-        <td style="text-align: right; width: 120px;">
-          ID:
-        </td>
-        <td>
-          <input id="idLivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
-        </td>
-      </tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
-      <tr>
-        <td style="text-align: right; width: 120px;">
-          Titulo:
-        </td>
-        <td>
-          <input id="dsTitulo" type="text" class="k-textbox" style="width: 600px">
-        </td>
-      </tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
-      <tr>
-        <td style="text-align: right; width: 120px;">
-          Autor:
-        </td>
-        <td>
-          <input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
-        </td>
-      </tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
-      <tr>
-        <td style="text-align: right; width: 120px;" class="k-required">
-          Genero:
-        </td>
-        <td>
-          <select id="flGenero" style="width: 600px;">
-            <option value="SP">Suspense</option>
-            <option value="TR">Terror</option>
-            <option value="RM">Romance</option>
-          </select>
-        </td>
-      </tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
-      <tr>
-        <td style="text-align: right; width: 120px;" class="k-required">
-          Numero de Páginas:
-        </td>
-        <td>
-          <input id="nrPagina" style="width: 80px;">
-        </td>
-        <td style="text-align: right; width: 370px;" class="k-required">
-          Data de Publicação:
-        </td>
-        <td>
-          <input id="dtPublicacao" style="width: 120px;">
-        </td>
-      </tr>
-    </table>
-    <table width="100%" cellpadding="0" cellspancing="2" role="presentation">
-      <tr>
-        <td>
-          <input id="flDisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
-          <label for="flDisponivel" class="checkbox-label">Disponivel</label>
-        </td>
-      </tr>
-    </table>
-    <div id="BarAcoes" style="text-align: right; border-bottom-width: 0px; height: 28px;"></div>
-  </div>
+	<div class="k-form">
+		<table>
+			<tr>
+				<td style="text-align: right; width: 120px;">
+					ID:
+				</td>
+				<td>
+					<input id="idLivro" type="text" class="k-textbox k-input-disabled" style="width: 80px;">
+				</td>
+			</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspancing="2" role="presentation">
+			<tr>
+				<td style="text-align: right; width: 120px;">
+					Titulo:
+				</td>
+				<td>
+					<input id="dsTitulo" type="text" class="k-textbox" style="width: 600px">
+				</td>
+			</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspancing="2" role="presentation">
+			<tr>
+				<td style="text-align: right; width: 120px;">
+					Autor:
+				</td>
+				<td>
+					<input id="nmAutor" type="text" class="k-textbox" style="width: 600px;">
+				</td>
+			</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspancing="2" role="presentation">
+			<tr>
+				<td style="text-align: right; width: 120px;" class="k-required">
+					Genero:
+				</td>
+				<td>
+					<select id="flGenero" style="width: 600px;">
+						<option value="SP">Suspense</option>
+						<option value="TR">Terror</option>
+						<option value="RM">Romance</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspancing="2" role="presentation">
+			<tr>
+				<td style="text-align: right; width: 120px;" class="k-required">
+					Numero de Páginas:
+				</td>
+				<td>
+					<input id="nrPagina" style="width: 80px;">
+				</td>
+				<td style="text-align: right; width: 370px;" class="k-required">
+					Data de Publicação:
+				</td>
+				<td>
+					<input id="dtPublicacao" style="width: 120px;">
+				</td>
+			</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspancing="2" role="presentation">
+			<tr>
+				<td>
+					<input id="flDisponivel" type="checkbox" style="margin-left: 124px;" class="k-checkbox">
+					<label for="flDisponivel" class="checkbox-label">Disponivel</label>
+				</td>
+			</tr>
+		</table>
+		<div id="BarAcoes" style="text-align: right; border-bottom-width: 0px; height: 28px;"></div>
+	</div>
 
 </form>
