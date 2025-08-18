@@ -70,15 +70,18 @@
 								if (strMensagem != "") {
 									alert(strMensagem)
 								} else {
+
+
 									if (nrIndiceId >= 0) {
+
 										arrLivros[nrIndiceId] = {
 											idlivro: nrIdCadastro,
 											dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
 											nmautor: $("#frmCadastroLivro #nmAutor").val(),
 											flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
-											nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumerictextBox").value(),
+											nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(),
 											dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
-											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked") ? "Sim" : "Não"
 										}
 									} else {
 										arrLivros.push({
@@ -88,12 +91,18 @@
 											flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
 											nrpagina: $("#frmCadastroLivro #nrPagina").data("kendoNumericTextBox").value(),
 											dtpublicacao: $("#frmCadastroLivro #dtPublicacao").val(),
-											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked" ? "Sim" : "Não")
+											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked") ? "Sim" : "Não"
 										})
+
 									}
+									localStorage.setItem("arrLivros", JSON.stringify(arrLivros))
 								}
-								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
+
+
+								console.log(JSON.parse(localStorage.getItem("arrLivros")))
+								$("#GrdConsultaLivro").data("kendoGrid").dataSource.data(arrLivros)
 								console.log(arrLivros)
+
 							}
 						},
 						{
@@ -109,6 +118,8 @@
 								let objLivro = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
 								let nrIndiceRemover = arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
 								arrLivros.splice(nrIndiceRemover, 1)
+
+								localStorage.setItem("arrLivros", JSON.stringify(arrLivros))
 								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
 								console.log(arrLivros)
 							}
