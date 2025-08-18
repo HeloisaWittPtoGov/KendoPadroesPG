@@ -95,11 +95,11 @@
 										})
 
 									}
-									localStorage.setItem("arrLivros", JSON.stringify(arrLivros))
+									localStorage.setItem(Storage_key, JSON.stringify(arrLivros))
 								}
 
 
-								console.log(JSON.parse(localStorage.getItem("arrLivros")))
+								console.log(JSON.parse(localStorage.getItem(Storage_key)))
 								$("#GrdConsultaLivro").data("kendoGrid").dataSource.data(arrLivros)
 								console.log(arrLivros)
 
@@ -119,7 +119,7 @@
 								let nrIndiceRemover = arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
 								arrLivros.splice(nrIndiceRemover, 1)
 
-								localStorage.setItem("arrLivros", JSON.stringify(arrLivros))
+								localStorage.setItem(Storage_key, JSON.stringify(arrLivros))
 								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
 								console.log(arrLivros)
 							}

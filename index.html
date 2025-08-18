@@ -149,8 +149,9 @@
 	</script>
 
 	<script>
-		let livrosStorage = localStorage.getItem("arrLivros");
 
+		const Storage_key = "app.biblioteca.livros.v1"
+		let livrosStorage = localStorage.getItem(Storage_key);
 		let arrLivros = livrosStorage ? JSON.parse(livrosStorage) : []
 
 
