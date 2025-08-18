@@ -109,6 +109,7 @@
 								let objLivro = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
 								let nrIndiceRemover = arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
 								arrLivros.splice(nrIndiceRemover, 1)
+								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
 								console.log(arrLivros)
 							}
 						},
