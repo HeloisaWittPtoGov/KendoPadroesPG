@@ -151,9 +151,8 @@
 	<script>
 
 		const Storage_key = "app.biblioteca.livros.v1"
-		let livrosStorage = localStorage.getItem(Storage_key);
-		let arrLivros = livrosStorage ? JSON.parse(livrosStorage) : []
-
+		let livrosStorage = JSON.parse(localStorage.getItem(Storage_key)) || { contador: 0, arrLivros: [] };
+		let arrLivros = livrosStorage.arrLivros || [];
 
 		$(function () {
 			OpenWindow(false, "ConsultaLivro")

@@ -74,7 +74,7 @@
 
 									if (nrIndiceId >= 0) {
 
-										arrLivros[nrIndiceId] = {
+										livrosStorage.arrLivros[nrIndiceId] = {
 											idlivro: nrIdCadastro,
 											dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
 											nmautor: $("#frmCadastroLivro #nmAutor").val(),
@@ -84,8 +84,8 @@
 											fldisponivel: $("#frmCadastroLivro #flDisponivel").is("checked") ? "Sim" : "Não"
 										}
 									} else {
-										arrLivros.push({
-											idlivro: $("#GrdConsultaLivro").data("kendoGrid").dataSource.data().length + 1,
+										livrosStorage.arrLivros.push({
+											idlivro: gerarIdUnico(),
 											dstitulo: $("#frmCadastroLivro #dsTitulo").val(),
 											nmautor: $("#frmCadastroLivro #nmAutor").val(),
 											flgenero: $("#frmCadastroLivro #flGenero").data("kendoDropDownList").value(),
@@ -95,7 +95,7 @@
 										})
 
 									}
-									localStorage.setItem(Storage_key, JSON.stringify(arrLivros))
+									localStorage.setItem(Storage_key, JSON.stringify(livrosStorage))
 								}
 
 
@@ -116,10 +116,10 @@
 							click: function () {
 								let GrdConsultaLivro = $("#GrdConsultaLivro").data("kendoGrid");
 								let objLivro = GrdConsultaLivro.dataItem(GrdConsultaLivro.select());
-								let nrIndiceRemover = arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
-								arrLivros.splice(nrIndiceRemover, 1)
+								let nrIndiceRemover = livrosStorage.arrLivros.findIndex(i => i.idlivro == objLivro.idlivro)
+								livrosStorage.arrLivros.splice(nrIndiceRemover, 1)
 
-								localStorage.setItem(Storage_key, JSON.stringify(arrLivros))
+								localStorage.setItem(Storage_key, JSON.stringify(livrosStorage))
 								$("#GrdConsultaLivro").data("kendoGrid").dataSource.read()
 								console.log(arrLivros)
 							}
@@ -181,6 +181,12 @@
 			}
 		} else {
 			console.log("incluindo")
+		}
+
+		function gerarIdUnico() {
+			livrosStorage.arrLivros.contador++;
+			localStorage.setItem(Storage_key, JSON.stringify(livrosStorage))
+			return Date.now().toString() + "_" + livrosStorage.contador;
 		}
 
 		// Açõa para centralizar a janela
